@@ -1,15 +1,16 @@
 #include <iostream>
+#include <algorithm>
 #include <stdio.h>
 using namespace std;
 
 const int L = 5;
 
-void out(int a[]) {
-    for (int k = 0; k < L; ++k) {
-        printf("%d ", a[k]);
-    }
-    printf("\n");
-}
+//void out(int a[]) {
+//    for (int k = 0; k < L; ++k) {
+//        printf("%d ", a[k]);
+//    }
+//    printf("\n");
+//}
 
 int main(void)
 {
@@ -24,6 +25,7 @@ int main(void)
             }
         } 
     }
-    out(a);
+    for_each(a, a+L, [](int e){cout<<e<<" ";});
+    cout << endl;
     return 0;
 }
