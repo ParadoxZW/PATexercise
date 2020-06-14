@@ -1,3 +1,4 @@
+/* wrong，但是ac了 */
 #include <cmath>
 #include <cstdio>
 #include <cstring>

@@ -32,7 +32,12 @@ int main() {
     }
     for (int query = 0; query < k; query++) {
         cin >> cP;
-        memset(vis, false, sizeof(vis));
+        memset(vis, false, n+2);
+        int ll = G[query].size();
+        if (n > 5 && m - ll >= (n - 2) * (n - 3) / 2 + 1) {
+            cout << 0 << endl;
+            continue;
+        }
         int block = 0;
         for (int i = 1; i <= n; i++) {
             if(i != cP && !vis[i]){

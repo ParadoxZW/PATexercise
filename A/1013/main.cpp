@@ -1,3 +1,4 @@
+/* 转82 */
 #include <cmath>
 #include <cstdio>
 #include <cstring>
@@ -30,7 +31,7 @@ int repair(int k) {
     // visited[k] = true;
     int needp = 0, ll;
     ll = G[k].size();
-    if (ll == 1) {
+    if (ll == 1) { // wrong
         return max(N - 1 - M, 0);
     }
     //     int nN = N - ns;
@@ -78,7 +79,7 @@ int main(void) {
     for (int i = 0; i < K; i++) {
         cin >> k;
         // cout << i << endl;
-        if (single[k]) {
+        if (single[k]) { // wrong，不能处理非单点连通子图
             cout << ns - 1 << endl;
             continue;
         }
