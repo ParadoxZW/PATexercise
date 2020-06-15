@@ -3,9 +3,9 @@ import random, os, sys
 import time
 
 def randgen():
-    maxn = 20
-    N = random.randint(2, maxn)
-    M = random.randint(1, N * (N - 1) // 2)
+    maxn = 150
+    N = random.randint(50, maxn)
+    M = random.randint(50, N * (N - 1) // 2)
     s = f"{N} {M} {N}\n"
     pairs = []
     # print(s)
@@ -34,18 +34,18 @@ def comp(data, exe1, exe2):
     out2 = out2.decode()
     if out1 == out2:
         # print("||")
-        return 1, t2/t1
+        return 1, t2, t1
     else:
         # print("--")
         # err.append(data)
         with open('./log.txt', 'a') as f:
             f.write(data)
-        return 0, t2/t1
+        return 0, t2, t1
 
 E1 = './2.exe'
 E2 = './4.exe'
 cnt = 0
-N = 500
+N = 1000
 log_file = "./log.txt"
 if os.path.isfile(log_file):
     os.remove(log_file)
@@ -55,18 +55,21 @@ os.mknod(log_file)
 # print(randgen())
 # print(randgen())
 max_rt = 0
-sum_rt = 0
+sum_rt1 = 0
+sum_rt2 = 0
 for i in range(N):
     data = randgen()
     n = int(data.split('\n')[0].split(' ')[0])
-    r, rt = comp(data, E1, E2)
-    sum_rt += rt
+    r, t2, t1 = comp(data, E1, E2)
+    sum_rt1 += t1
+    sum_rt2 += t2
+    rt = t2 / t1
     max_rt = max(max_rt, rt)
     cnt += r
-    if rt > 1.8:
+    if rt > 2.:
         with open('./log.txt', 'a') as f:
             f.write(data)
     print(i, r, rt, n)
 
 print(N - cnt, cnt / N)
-print(max_rt, sum_rt / N)
+print(max_rt, sum_rt2 / sum_rt1)
