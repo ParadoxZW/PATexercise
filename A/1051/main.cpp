@@ -1,56 +1,58 @@
-#include <iostream>
+#include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstring>
-#include <cmath>
+#include <iostream>
 #include <map>
+#include <stack>
 #include <string>
 #include <vector>
-#include <algorithm>
 // #include <mat_print.hpp>
 using namespace std;
 
+const int maxn = 1010;
+
 int m, n, k;
-int r, out, nin, x, top;
-int last, maxn;
-bool flag;
-vector<int> v;
+int nums[maxn];
+// vector<int> v;
 
 int main(void) {
     cin >> m >> n >> k;
     for (int i = 0; i < k; i++) {
-        maxn = m;
-        out = 1;
-        flag = true;
-        for (int j = 0; j < n; j++) {
-            scanf("%d", &x);
-            if (flag) {
-                if (x > maxn) {
-                    flag = false;
-                    cout << "NO" << endl;
-                }
-                maxn++;
-                if(x > last){
-                    if(x < lg){
-                        flag = false;
-                        cout << "NO" << endl;
-                    }else {
-                        last = x;
-                        lg = x;
-                        // continue; 
-                    }
-                }else{
-                    if(x != ls - 1){
-                        flag = false;
-                        cout << "NO" << endl;
-                    }else{
-                        ls--;
-                        last = x;
-                    }
-                }
+        stack<int> st;
+        // st.push(1);
+        int nxt = 1;
+        bool flag = true;
+        for (int i = 0; i < n; i++) {
+            scanf("%d", nums + i);
+        }
+        // cout << (nums|vw::take(n)) << endl;
+        // cout << st.top() << endl;
+        for (int i = 0; i < n; i++) {
+            if (st.empty()) {
+                st.push(nxt++);
+            }
+            while (st.top() != nums[i] && nums[i] >= nxt && st.size() <= m) {
+                // cout << nxt << endl;
+                st.push(nxt++);
+                // cout << st.size() << endl;
+            }
+            if (st.size() > m) {
+                flag = false;
+                break;
+            }
+            if (st.top() == nums[i]) {
+                // cout << st.top() << endl;
+                st.pop();
+            } else {
+                flag = false;
+                break;
             }
         }
         if (flag) {
             cout << "YES" << endl;
+        } else {
+            cout << "NO" << endl;
         }
     }
 
