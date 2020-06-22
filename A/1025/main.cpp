@@ -23,7 +23,7 @@ int lr[110];
 int ls[110];
 int ln[110];
 int N, K;
-int x1, x2, x3, k;
+int x1, x2=-1, x3, k;
 
 bool cmp(int a, int b) {
     if (tee[a].score != tee[b].score) {
@@ -46,6 +46,7 @@ int main(void) {
     }
     sort(idx, idx + k, cmp);
     cout << k << endl;
+    memset(ls, -1, sizeof(ls));
     for (int i = 0; i < k; i++) {
         info &t = tee[idx[i]];
         if (t.score != x2) {
