@@ -17,14 +17,14 @@ int getHehight(node* root) {
 }
 
 int getBalanceFactor(node* root) {
-    return getHehight(root->lchild) - getHehight(root-rchild);
+    return getHehight(root->lchild) - getHehight(root->rchild);
 }
 
 void updateHeight(node* root) {
     root->height = max(
         getHehight(root->lchild),
         getHehight(root->rchild)
-    );
+    ) + 1;
 }
 
 void L(node* &root) {

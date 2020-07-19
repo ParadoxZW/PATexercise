@@ -21,7 +21,9 @@ const int maxn = 1010;
 vector<Node> Adj[maxn];
 bool vis[maxn];
 int weight[maxn];
+int total_weight[maxn];
 map<string, int> name2id;
+map<string, int> head2num;
 int N, K;
 char n1[5], n2[5];
 char id2name[maxn][5];
@@ -29,18 +31,21 @@ int w, cnt, idx;
 int u, v, tmp;
 int gang;
 int head[maxn], num[maxn];
+int bv, bi;
 
 void DFS(int s) {
     num[cnt]++;
-    if (weight[head[cnt]] < weight[s]) {
-        head[cnt] = s;
+    total_weight[cnt] += weight[s];
+    if (bv < weight[s]) {
+        bv = weight[s];
+        bi = s;
     }
     for (auto j:Adj[s]) {
         v = j.to;
         w = j.len;
         // cout << w << endl;
-        if (!vis[v] && w > K) {
-            cout << v << " " << w << endl;
+        if (!vis[v]) {
+            // cout << v << " " << w << endl;
             vis[v] = true;
             DFS(v);
         }
@@ -79,7 +84,10 @@ int main(void) {
         weight[u] += w;
         weight[v] += w;
     }
-    cout << idx << endl;
+    // for (int i = 0; i < idx; i++) {
+    //     cout << id2name[i] << endl;
+    // }
+    // cout << idx << endl;
     for (int i = 0; i < idx; i++) {
         if(!vis[i]) {
             // cout << i << endl;
@@ -87,21 +95,26 @@ int main(void) {
             // num[cnt]++;
             // head[cnt] = i;
             DFS(i);
+            head[cnt] = bi;
+            // cout << bi << endl;
+            bv = 0;
             cnt++;
         }
     }
-    cout << cnt << endl;
+    // cout << endl;
+    // cout << cnt << endl;
     for (int i = 0; i < cnt; i++) {
-        if (num[i] > 2) {
+        if (num[i] > 2 && (total_weight[i]>>1) > K) {
+            string ss = id2name[head[i]];
+            // cout << ss << endl;
+            head2num[ss] = num[i];
             gang++;
         }
     }
 
     cout << gang << endl;
-    for (int i = 0; i < cnt; i++) {
-        if (num[i] > 2) {
-            cout << id2name[head[i]] << " " << num[i] << endl;
-        }
+    for (auto it:head2num) {
+        cout << it.first << " " << it.second << endl;
     }
     return 0;
 }
