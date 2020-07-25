@@ -1,11 +1,8 @@
-node *findMax(node **proot, node **&qroot) {
-    node* iroot = *proot;
-    qroot = proot;
-    while(iroot->rchild) {
-        qroot = &(iroot->rchild);
-        iroot = iroot->rchild;
+node *findMax(node *root) {
+    while(root->rchild) {
+        root = root->rchild;
     }
-    return iroot;
+    return root;
 }
 
 void deleteNode(node* &root, int x) {
@@ -14,15 +11,13 @@ void deleteNode(node* &root, int x) {
         if (!root->lchild && !root->rchild) {
             root = NULL;
         } else if (root->lchild) {
-            node **pre_;
-            node *pre = findMax(&(root->lchild), pre_);
+            node *pre = findMax(root->lchild);
             root->data = pre->data;
-            deleteNode(*pre_, pre->data);
+            deleteNode(root->lchild, pre->data);
         } else {
-            node **nxt_;
-            node *nxt = findMin(&(root->rchild), nxt_);
+            node *nxt = findMin(root->rchild);
             root->data = nxt->data;
-            deleteNode(*nxt_, nxt->data);
+            deleteNode(root->rchild, nxt->data);
         }
     } else if(root->lchild > x) {
         deleteNode(root->lchild, x);
