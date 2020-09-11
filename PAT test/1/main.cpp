@@ -3,19 +3,15 @@ using namespace std;
 
 const int maxn = 99994400;
 
-// bool isPrime[maxn];
-bool vis[maxn];
+bool notPrime[maxn];
 int N;
 
 void find() {
-    // isPrime[2] = true;
-    vis[1] = vis[0] = true;
+    notPrime[1] = notPrime[0] = true;
     for (int i = 2; i<=N; i++) {
-        if(!vis[i]) {
-            // isPrime[i] = true;
-            // printf("%d ", i);
+        if(!notPrime[i]) {
             for(int j=i+i;j<=N;j+=i){
-                vis[j] = true;
+                notPrime[j] = true;
             }
         }
     }
@@ -26,17 +22,13 @@ int t;
 bool flag = true;
 
 int main() {
-#ifdef LOCAL
-    freopen("./1.txt", "r", stdin);
-#endif
-    // cin >> N;
     cin.getline(x, 9);
     N = atoi(x);
     find();
 
     for(int i=0;i<8;i++){
         t = atoi(x+i);
-        if(vis[t]) {
+        if(notPrime[t]) {
             flag = false;
             printf("%s No\n", x + i);
         }else{
